@@ -1,8 +1,12 @@
 ﻿#ifndef TEST_H
 #define TEST_H
 
-#include "Object.h"
 #include <iostream>
+#include "Exception.h"
+#include "Object.h"
+#include "SmartPointer.h"
+#include <stdio.h>
+#include "List.h"
 
 using namespace std;
 using namespace ZYLib;
