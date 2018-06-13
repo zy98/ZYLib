@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "SmartPointer.h"
 #include <stdio.h>
+#include "List.h"
 #include "Test.h"
 
 
@@ -14,8 +15,5 @@ using namespace ZYLib;
 
 int main()
 {
-    InvalidOperationException* a=new InvalidOperationException();
-
-    delete a;
-    return 0;
+    List<int> l;
 }
