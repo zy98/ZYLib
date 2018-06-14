@@ -3,6 +3,8 @@
 
 #include "Object.h"
 
+#define ThrowException(e,m) throw e(m,__FILE__,__LINE__)
+
 namespace ZYLib {
 
 class Exception : public Object

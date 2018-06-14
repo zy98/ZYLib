@@ -5,13 +5,14 @@
 #include "Exception.h"
 #include "Object.h"
 #include "SmartPointer.h"
+#include "StaticList.h"
+#include "DynamicList.h"
 #include <stdio.h>
 #include "List.h"
 
 using namespace std;
 using namespace ZYLib;
 
-#define ThrowException(e,m) throw e(m,__FILE__,__LINE__)
 #define Cout(x)  cout<<x<<endl
 
 

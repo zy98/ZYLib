@@ -13,4 +13,6 @@ HEADERS += \
     SmartPointer.h \
     Test.h \
     List.h \
-    SeqList.h
+    SeqList.h \
+    StaticList.h \
+    DynamicList.h
