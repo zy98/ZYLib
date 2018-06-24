@@ -21,6 +21,10 @@ public:
             m_capacity=capacity;
             this->m_length=0;
         }
+        else
+        {
+            ThrowException(NoEnoughMemoryException,"DynamicList() constructor failed");
+        }
     }
 
     void resize(int capacity)//为什么不用bool返回，要用异常

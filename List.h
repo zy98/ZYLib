@@ -8,6 +8,12 @@ namespace ZYLib {
 template <typename T>
 class List : public Object
 {
+protected:
+    List(const List<T>&);
+    T& operator= (const List<T>&);//容器类禁用拷贝构造和赋值操作符
+
+public:
+    List(){}
     virtual bool insert(int i,const T& t) =0;
     virtual bool remove(int i) =0;
     virtual bool set(int i,const T& t) =0;

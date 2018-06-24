@@ -14,7 +14,8 @@ protected:
     int m_length;
 
 public:
-    bool insert(int i, const T &t)
+
+    bool insert(int i, const T& t)
     {
         bool ret=(i>=0) && (i<=m_length);
         ret=ret && (i<capacity());
@@ -29,6 +30,11 @@ public:
             m_length++;
         }
         return ret;
+    }
+
+    bool insert(const T& t)
+    {
+        return insert(m_length,t);
     }
 
     bool remove(int i)
