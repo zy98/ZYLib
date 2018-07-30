@@ -14,7 +14,6 @@ protected:
     int m_length;
 
 public:
-
     bool insert(int i, const T& t)
     {
         bool ret=(i>=0) && (i<=m_length);
@@ -52,6 +51,20 @@ public:
         return ret;
     }
 
+    int find(const T& t)
+    {
+        int ret=-1;
+        for(int i=0;i<length();i++)
+        {
+            if(m_array[i] == t)
+            {
+                ret=i;
+                break;
+            }
+        }
+        return ret;
+    }
+
     bool set(int i, const T &t)
     {
         bool ret=(i>=0) && (i<m_length);
@@ -63,15 +76,20 @@ public:
         return ret;
     }
 
-    bool get(int i, T &t) const
+    T get(int i,bool& b) const
     {
-        bool ret=(i>=0) && (i<m_length);
+        b=(i>=0) && (i<m_length);
 
-        if(ret)
-        {
-            t=m_array[i];
-        }
-        return ret;
+        if(b)
+            return m_array[i];
+        else
+            ThrowException(IndexOutOfBoundsException,"SeqList -> get out of index");
+    }
+
+    T get(int i) const
+    {
+        bool b;
+        return get(i,b);
     }
 
     int length() const
@@ -97,6 +115,7 @@ public:
         }
     }
 
+    //SeqList及其子类的const对象不能初始化，如何使用const函数？
     T operator [](int i) const
     {
         return const_cast<SeqList<T>&>(*this)[i];

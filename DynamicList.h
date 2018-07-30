@@ -5,6 +5,9 @@
 
 namespace ZYLib {
 
+//线性存储结构
+//使用resize函数重置数组大小；
+//重载下标操作符不可以当作数组使用
 template <typename T>
 class DynamicList:public SeqList<T>
 {
