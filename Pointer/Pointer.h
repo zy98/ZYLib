@@ -1,7 +1,7 @@
 ﻿#ifndef POINTER_H
 #define POINTER_H
 
-#include "Object.h"
+#include "Object/Object.h"
 
 namespace ZYLib
 {

@@ -2,7 +2,7 @@
 #define STATICSTACK_H
 
 #include "Stack.h"
-#include "Exception.h"
+#include "Object/Exception.h"
 
 namespace ZYLib
 {

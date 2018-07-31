@@ -1,7 +1,7 @@
 ﻿#ifndef QUEUE_H
 #define QUEUE_H
 
-#include "Object.h"
+#include "Object/Object.h"
 
 namespace ZYLib
 {

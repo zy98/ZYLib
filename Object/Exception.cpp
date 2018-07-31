@@ -2,8 +2,6 @@
 #include <cstring>
 #include <cstdlib>
 
-
-
 namespace ZYLib {
 
 void Exception::init(const char* message, const char *file, int line)

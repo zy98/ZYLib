@@ -1,29 +1,35 @@
-﻿#ifndef DUALLINKLIST_H
-#define DUALLINKLIST_H
+﻿#ifndef LINKLIST_H
+#define LINKLIST_H
 
 #include "List.h"
-#include "Exception.h"
+#include "Object/Exception.h"
+#include <iostream>
 
-namespace ZYLib
-{
+using namespace std;
+
+namespace ZYLib{
 
 template <typename T>
-class DualLinkList:public List<T>
+class LinkList:public List<T>
 {
 protected:
+    //struct作为结构体，一般不要写成类的形式（添加构造函数）
     struct Node:public Object
     {
         T value;
         Node* next;
-        Node* pre;
-    };
 
-    struct : public Object
-    {
-        char instead[sizeof(T)];
-        Node* next;
-        Node* pre;
-    }m_head;
+        void* operator new(unsigned int size)
+        {
+            return Object::operator new(size);
+        }
+
+        void* operator new(unsigned int size,void* loc)
+        {
+            (void)size;
+            return loc;
+        }
+    };
 
     //定位到i-1个节点
     Node* locate(int i)
@@ -38,7 +44,7 @@ protected:
 
     Node* locate(int i) const
     {
-        return const_cast<DualLinkList<T>*>(this)->locate(i);
+        return const_cast<LinkList<T>*>(this)->locate(i);
     }
 
     virtual Node* create()
@@ -51,17 +57,25 @@ protected:
         delete pn;
     }
 
+
+    //m_head头节点这样写是因为如果T的构造函数中抛出异常，会导致LinkList对象构造异常
+    //所以将T对象的内存换为等大小的char数组内存
+    //唐的课程中将m_head设置为mutable是为了在get() const函数中调用的locate需要改变m_head的值
+    //而我没有用mutable，而是重载了locate const版本的函数；
+    struct : public Object
+    {
+        char instead[sizeof(T)];
+        Node* next;
+    }m_head;
+
     int m_length;
     Node* m_current;
 
-
-
 public:
-    DualLinkList()
+    LinkList()
     {
         //由于m_head不是T类型，不会调用Node构造函数赋值，所以要手动赋初始值NULL
         m_head.next=NULL;
-        m_head.pre=NULL;
         m_current=NULL;
         m_length=0;
     }
@@ -77,22 +91,9 @@ public:
             {
                 temp->value=t;
 
-                Node* last=locate(i);
-                Node* next=last->next;
-
-                temp->next=last->next;
-                last->next=temp;
-
-                //如果插入位置不是0，就将插入节点的前驱指针指向上一个节点，否则就置为0
-                if(i != 0)
-                    temp->pre=last;
-                else
-                    temp->pre=NULL;
-
-                //如果插入位置不是链表末尾，就将下一个元素的前驱指针指向插入节点
-                if(next != NULL)
-                    next->pre=temp;
-
+                Node* pre=locate(i);
+                temp->next=pre->next;
+                pre->next=temp;
                 m_length++;
             }
             else
@@ -121,22 +122,17 @@ public:
             {
                 Node* pre=locate(i);
                 Node* del=pre->next;
-                Node* next=del->next;
 
                 if(m_current == del)//如果m_current指针正好指向要删除的元素，则将其指向下一个元素
                     m_current=m_current->next;
 
                 pre->next=del->next;
-                if(next != NULL)
-                    next->pre=del->pre;
-
                 m_length--;
                 destroy(del);//delete temp;
             }
             else
             {
                 m_head.next=NULL;
-                m_head.pre=NULL;
                 m_current=NULL;
             }
         }
@@ -174,10 +170,8 @@ public:
 
             cur=cur->next;
         }
-
         if(cur == NULL)
-            ret=-1;
-
+            ret=-1;//如果查找到最后没有找到（cur == NULL），返回-1
         return ret;
     }
 
@@ -207,9 +201,12 @@ public:
 
     void clear()
     {
-        while(m_length > 0)
+        while(m_head.next)
         {
-            remove(0);
+            Node* cur=m_head.next;
+            m_head.next=cur->next;
+            m_length--;
+            destroy(cur);//delete cur;
         }
     }
 
@@ -238,7 +235,7 @@ public:
     //返回值表示移动的次数
     virtual int move(unsigned int step=1)
     {
-        int i=0;
+        unsigned int i=0;
         while(i<step && !end())
         {
             m_current=m_current->next;
@@ -247,33 +244,18 @@ public:
         return i;
     }
 
-    virtual int movePre(int step=1)
-    {
-        int i=0;
-        while(i<step && m_current != NULL)
-        {
-            m_current=m_current->pre;
-            i++;
-        }
-        return i;
-    }
-
     virtual bool next()
     {
-        return move() == 1;
+        return move() == 1;//next函数相当于向后移动一次
     }
 
-    virtual bool pre()
-    {
-        return movePre() == 1;
-    }
-
-    ~DualLinkList()
+    ~LinkList()
     {
         clear();
     }
+
 };
 
 }
 
-#endif // DUALLINKLIST_H
+#endif // LINKLIST_H

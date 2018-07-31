@@ -2,8 +2,8 @@
 #define SHAREDPOINTER_H
 
 #include "Pointer.h"
-#include "Exception.h"
-#include <iostream>
+#include "Object/Exception.h"
+
 using namespace std;
 namespace ZYLib
 {

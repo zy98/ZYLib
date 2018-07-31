@@ -2,7 +2,7 @@
 #define DYNAMICARRAY_H
 
 #include "Array.h"
-#include "Exception.h"
+#include "Object/Exception.h"
 
 namespace ZYLib {
 

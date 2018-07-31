@@ -2,7 +2,7 @@
 #define LINKQUEUE_H
 
 #include "Queue.h"
-#include "LinkList.h"
+#include "List/LinkList.h"
 
 namespace ZYLib
 {

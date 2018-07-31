@@ -2,8 +2,8 @@
 #define LINKSTACK_H
 
 #include "Stack.h"
-#include "LinkList.h"
-#include "Exception.h"
+#include "List/LinkList.h"
+#include "Object/Exception.h"
 
 namespace ZYLib
 {

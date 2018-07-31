@@ -3,31 +3,35 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.cpp \
-    Exception.cpp \
-    Object.cpp
-
 HEADERS += \
-    Exception.h \
-    Object.h \
-    SmartPointer.h \
+    Array/Array.h \
+    Array/DynamicArray.h \
+    Array/StaticArray.h \
+    List/CircleList.h \
+    List/DualLinkList.h \
+    List/DynamicList.h \
+    List/LinkList.h \
+    List/List.h \
+    List/SeqList.h \
+    List/StaticLinkList.h \
+    List/StaticList.h \
+    Pointer/Pointer.h \
+    Pointer/SharedPointer.h \
+    Pointer/SmartPointer.h \
+    Queue/LinkQueue.h \
+    Queue/Queue.h \
+    Queue/StaticQueue.h \
+    Stack/LinkStack.h \
+    Stack/Stack.h \
+    Stack/StaticStack.h \
+    String/String.h \
     Test.h \
-    List.h \
-    SeqList.h \
-    StaticList.h \
-    DynamicList.h \
-    Array.h \
-    StaticArray.h \
-    DynamicArray.h \
-    LinkList.h \
-    StaticLinkList.h \
-    Pointer.h \
-    SharedPointer.h \
-    CircleList.h \
-    DualLinkList.h \
-    Stack.h \
-    StaticStack.h \
-    LinkStack.h \
-    Queue.h \
-    StaticQueue.h \
-    LinkQueue.h
+    Object/Exception.h \
+    Object/Object.h
+
+SOURCES += \
+    String/String.cpp \
+    main.cpp \
+    Object/Exception.cpp \
+    Object/Object.cpp
+

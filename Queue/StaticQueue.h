@@ -2,7 +2,7 @@
 #define STATICQUEUE_H
 
 #include "Queue.h"
-#include "Exception.h"
+#include "Object/Exception.h"
 
 namespace ZYLib
 {

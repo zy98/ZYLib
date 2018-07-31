@@ -1,8 +1,8 @@
 ﻿#ifndef ARRAY_H
 #define ARRAY_H
 
-#include "Object.h"
-#include "Exception.h"
+#include "Object/Object.h"
+#include "Object/Exception.h"
 
 namespace ZYLib {
 
