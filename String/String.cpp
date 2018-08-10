@@ -21,6 +21,66 @@ void String::init(const char* s)
     }
 }
 
+int* String::Next(const char* s)
+{
+    int len=strlen(s);
+    int* next=new int[len];
+
+    if(next)
+    {
+        int k=0;
+        next[0] = 0;
+
+        for(int i=1;i<len;i++)
+        {
+            while(k > 0 && s[i] != s[k])
+                k=next[k-1];
+
+            if(s[i] == s[k])
+                k++;
+
+            next[i]=k;
+        }
+    }
+    else
+    {
+        delete [] next;
+        next=NULL;
+    }
+    return next;
+}
+int String::kmp(const char* source,const char* aim)
+{
+    int ret=-1;
+    int mlen=strlen(aim);
+    int slen=strlen(source);
+
+    if(mlen > 0 && mlen <=slen)
+    {
+        int* next=Next(aim);
+
+        if(next)
+        {
+            for(int i=0,f=0;i<slen;i++)
+            {
+                while(f>0 && source[i] != aim[f])
+                    f=next[f-1];
+
+                if(source[i] == aim[f])
+                    f++;
+
+                if(f == mlen)
+                {
+                    ret=i-mlen+1;
+                    break;
+                }
+            }
+        }
+        delete[] next;
+    }
+    return ret;
+}
+
 String::String()
 {
     init("");
@@ -36,6 +96,7 @@ String::String(const String& s)
     init(s.m_str);
 }
 
+//*添加String(char c)构造函数的意义在于当函数的参数为char时可隐式转换为const String&；
 String::String(char c)
 {
     char s[]={c,'\0'};
@@ -155,11 +216,6 @@ String String::operator +(const String& s) const
 {
     return (*this + s.m_str);
 }
-String String::operator +(char c) const
-{
-    char s[]={c,'\0'};
-    return (*this + s);
-}
 
 String& String::operator +=(const char* s)
 {
@@ -169,10 +225,22 @@ String& String::operator +=(const String& s)
 {
     return *this = *this + s.m_str;
 }
-String& String::operator +=(char c)
+
+String String::operator -(const char* s) const
 {
-    char s[]={c,'\0'};
-    return *this = *this + s;
+    return String(*this).remove(s);
+}
+String String::operator -(const String& s) const
+{
+    return String(*this).remove(s);
+}
+String& String::operator -=(const char* s)
+{
+    return (*this).remove(s);
+}
+String& String::operator -=(const String& s)
+{
+    return (*this).remove(s);
 }
 
 String& String::operator =(const char* s)
@@ -196,11 +264,6 @@ String& String::operator =(const char* s)
 String& String::operator =(const String &s)
 {
     return *this = s.m_str;
-}
-String& String::operator =(char c)
-{
-    char s[]={c,'\0'};
-    return *this = s;
 }
 
 char& String::operator[] (int i)
@@ -283,7 +346,8 @@ String& String::insert(int index,const char* s)
                 strncpy(str+index,s,slen);
                 strncpy(str+index+slen,m_str+index,m_length-index);
 
-                //str[m_length + slen] = '\0';
+                //如果末尾不添加\0，当在字符串末尾插入一个字符时（const char* s=char c）就会出现一个没有结束符的字符串；
+                str[m_length + slen] = '\0';
 
                 free(m_str);
                 m_str=str;
@@ -325,33 +389,92 @@ String& String::trim()
     return *this;
 }
 
-/*
- * 改进
-String& String::trim()
+int String::indexOf(const char* s) const
 {
-    char* str=m_str+m_length;
-    int count=0;
-    while(*--str == ' ') count++;
-    *(str+1)='\0'; //去掉尾部空格
-    m_length-=count;
-
-    str=m_str;
-    count=0;//空格个数
-
-    while(*str == ' ')
-        count++,str++;
-
-    while(*str != '\0')
+    return kmp(m_str,STR(s));
+}
+int String::indexOf(const String& s) const
+{
+    return kmp(m_str,s.m_str);
+}
+String& String::remove(int index,int len)
+{
+    if(index >= 0 && index < m_length)
     {
-        *(str-count) = *str;
-        str++;
-    }
-    *(str-count) = *str;   //将非空格字符向前移动count个，最后将字符串结束符移动；
-    m_length-=count;
+        int i=index;
+        int m=index + len;
 
+        //依次将m移到i直到字符串末尾；
+        while(i < m && m < m_length)
+        {
+            m_str[i++]=m_str[m++];
+        }
+        m_str[i]='\0';
+        m_length=i;
+    }
     return *this;
 }
-*/
+String& String::remove(const char* s)
+{
+    return remove(indexOf(s), strlen(STR(s)));
+}
+String& String::remove(const String& s)
+{
+    return remove(indexOf(s), strlen(s.m_str));
+}
+
+String& String::replace(const char* t,const char* s)
+{
+    int i=indexOf(t);
+    if(i >= 0)
+    {
+        if(strlen(t) == strlen(STR(s)) )
+        {
+            char* str=m_str+i;
+            while(*s != '\0')
+                *(str++)=*(s++);
+        }
+        else
+        {
+            remove(t);
+            insert(i,STR(s));
+        }
+    }
+    return *this;
+}
+String& String::replace(const char* t,const String& s)
+{
+    return replace(t,s.m_str);
+}
+String& String::replace(const String& t,const char* s)
+{
+    return replace(t.m_str,s);
+}
+String& String::replace(const String& t,const String& s)
+{
+    return replace(t.m_str,s.m_str);
+}
+
+String String::sub(int i,int len) const
+{
+    if(i >= 0 && i < m_length)
+    {
+        if(len > m_length-i) len = m_length-i;
+
+        char* str=reinterpret_cast<char*>(malloc(len+1));
+        if(str)
+        {
+            strncpy(str,m_str+i,len);
+            str[len]='\0';
+            return String(str);
+        }
+    }
+    else
+    {
+        ThrowException(IndexOutOfBoundsException,"String String::sub index out of bounds");
+    }
+    return String();
+}
 
 String::~String()
 {

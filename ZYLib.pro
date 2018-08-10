@@ -27,7 +27,13 @@ HEADERS += \
     String/String.h \
     Test.h \
     Object/Exception.h \
-    Object/Object.h
+    Object/Object.h \
+    QueenSolution.h \
+    Sort/Sort.h \
+    Other/Proxy.h \
+    Other/Problems.h \
+    Other/QueenSolution.h \
+    Other/Test.h
 
 SOURCES += \
     String/String.cpp \

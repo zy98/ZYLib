@@ -64,6 +64,11 @@ public:
         //调用const函数的必然是const对象，所以先转化成非const对象，再调用其非const的[]操作符；
     }
 
+    T* array() const
+    {
+        return m_array;
+    }
+
     virtual int length() const = 0;
 };
 
