@@ -33,7 +33,11 @@ HEADERS += \
     Other/Proxy.h \
     Other/Problems.h \
     Other/QueenSolution.h \
-    Other/Test.h
+    Other/Test.h \
+    Tree/AbsTree.h \
+    Tree/AbsTreeNode.h \
+    Tree/GTreeNode.h \
+    Tree/GTree.h
 
 SOURCES += \
     String/String.cpp \

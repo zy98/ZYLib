@@ -157,6 +157,7 @@ public:
         return ret;
     }
 
+    //返回查找元素的下标，如果没有找到返回-1
     int find(const T &t)
     {
         int ret=-1;
