@@ -50,7 +50,6 @@ protected:
         {
             ThrowException(NoEnoughMemoryException,"No enough momery to intitialize DynamicArray");
         }
-
     }
 
 public:

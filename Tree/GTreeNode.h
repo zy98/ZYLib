@@ -11,18 +11,26 @@ template <typename T>
 class GTreeNode:public AbsTreeNode<T>
 {
 public:
-    LinkList< GTreeNode<T>* > m_child;
+    LinkList< GTreeNode<T>* > child;
 
-
-    GTreeNode():AbsTreeNode<T>()
+    static GTreeNode<T>* NewNode()
     {
-
+        GTreeNode<T>* ret=new GTreeNode<T>;
+        if(ret != NULL)
+        {
+            ret->m_flag=true;
+            return ret;
+        }
+        else
+            return NULL;
     }
 
     ~GTreeNode()
     {
 
     }
+
+
 };
 
 }

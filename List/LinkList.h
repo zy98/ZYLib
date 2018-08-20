@@ -176,7 +176,7 @@ public:
         return ret;
     }
 
-    T get(int i,bool& b) const
+    T& get(int i,bool& b) const
     {
         b=( (0<=i) && (i<m_length));
         if(b)
@@ -189,7 +189,7 @@ public:
         }
     }
 
-    T get(int i) const
+    T& get(int i) const
     {
         bool b;
         return get(i,b);

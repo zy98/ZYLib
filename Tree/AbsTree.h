@@ -4,6 +4,8 @@
 #include "Object/Object.h"
 #include "Tree/AbsTreeNode.h"
 #include "Pointer/SharedPointer.h"
+#include "Queue/LinkQueue.h"
+#include "Object/Exception.h"
 
 
 namespace ZYLib
@@ -14,6 +16,10 @@ class AbsTree:public Object
 {
 protected:
     AbsTreeNode<T>* m_root;
+    LinkQueue<AbsTreeNode<T>*> m_queue;
+
+    AbsTree(const AbsTree<T>&);
+    AbsTree<T>& operator = (const AbsTree<T>&);
 
 public:
     AbsTree(){ m_root=NULL;}
@@ -28,6 +34,31 @@ public:
     virtual int count() const=0;
     virtual int height()=0;
     virtual void clear()=0;
+
+    virtual void begin()
+    {
+        if(root() != NULL)
+        {
+            m_queue.clear();
+            m_queue.add(root());
+        }
+    }
+
+    virtual T current()
+    {
+        if(!end())
+            return m_queue.front()->value;
+        else
+            ThrowException(InvalidOperationException,"no value in current tree");
+    }
+
+
+    virtual bool end()
+    {
+        return m_queue.length() == 0;
+    }
+
+    virtual void next()=0;
 };
 
 }

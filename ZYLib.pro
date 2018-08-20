@@ -37,7 +37,9 @@ HEADERS += \
     Tree/AbsTree.h \
     Tree/AbsTreeNode.h \
     Tree/GTreeNode.h \
-    Tree/GTree.h
+    Tree/GTree.h \
+    Tree/BTree.h \
+    Tree/BTreeNode.h
 
 SOURCES += \
     String/String.cpp \

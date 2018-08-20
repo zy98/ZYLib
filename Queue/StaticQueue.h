@@ -49,7 +49,7 @@ public:
         }
     }
 
-    T front() const
+    T& front() const
     {
         if(m_length > 0)
             return m_space[m_front];

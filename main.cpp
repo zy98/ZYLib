@@ -11,54 +11,64 @@ using namespace ZYLib;
 
 int main()
 {
-    char* s="KLFGMIJ";
-    clock_t begin=clock();
+    BTree<int> lt;
+    BTree<int> rt;
+    lt.insert(1,NULL);
+    BTreeNode<int>* node=lt.find(1);
+    lt.insert(2,node);
+    lt.insert(3,node);
+    node=lt.find(2);
+    lt.insert(4,node);
+    lt.insert(5,node);
+    node=lt.find(3);
+    lt.insert(6,node);
+    lt.insert(7,node);
+    node=lt.find(4);
+    lt.insert(8,node);
+    lt.insert(9,node);
+    node=lt.find(5);
+    lt.insert(10,node);
 
-    GTree<char> tree;
-    tree.insert('A',NULL);
+    rt.insert(0,NULL);
+    node=rt.find(0);
+    rt.insert(6,node);
+    rt.insert(2,node);
+    node=rt.find(2);
+    rt.insert(7,node);
+    rt.insert(8,node);
 
-    cout<<1<<endl;
-    GTreeNode<char>* node=tree.find('A');
-    cout<<node<<endl;
-    tree.insert('B',node);
-    tree.insert('C',node);
-    tree.insert('D',node);
-    cout<<s<<endl;
+    SharedPointer<BTree<int> > ret=lt+rt;
 
-    node=tree.find('B');
-    tree.insert('E',node);
-    tree.insert('F',node);
-    node=tree.find('E');
-    tree.insert('K',node);
-    tree.insert('L',node);
-    node=tree.find('C');
-    tree.insert('G',node);
+    BTreeNode<int>* tail=NULL;
+    BTreeNode<int>* head=lt.thread(PreOrder,tail);
 
-    node=tree.find('D');
-    tree.insert('H',node);
-    tree.insert('I',node);
-    tree.insert('J',node);
-    node=tree.find('H');
-    tree.insert('M',node);
-
-
-
-
-    for(int i=0;i<7;i++)
+    while(head != NULL)
     {
-        AbsTreeNode<char>* node=tree.find(s[i]);
-        while(node != NULL)
-        {
-            cout<<node->m_value<<" ";
-            node=(node->m_parent);
-        }
-        cout<<endl;
+        cout<<head->value<<" ";
+        head=head->right;
+    }
+    cout<<endl;
+
+    while(tail != NULL)
+    {
+        cout<<tail->value<<" ";
+        tail=tail->left;
+    }
+    cout<<endl;
+
+    for(rt.begin();!rt.end();rt.next())
+        cout<<rt.current()<<" ";
+    cout<<endl;
+
+
+
+    SharedPointer<Array<int> > level=ret->traversal(LevelOrder);
+
+    for(int i=0;i<level->length();i++)
+    {
+        cout<<(*level)[i]<<" ";
     }
 
-    clock_t end=clock();
-
-
-
-    cout<<end-begin<<endl;
+    cout<<endl;
 
 }

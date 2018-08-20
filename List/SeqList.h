@@ -76,7 +76,7 @@ public:
         return ret;
     }
 
-    T get(int i,bool& b) const
+    T& get(int i,bool& b) const
     {
         b=(i>=0) && (i<m_length);
 
@@ -86,7 +86,7 @@ public:
             ThrowException(IndexOutOfBoundsException,"SeqList -> get out of index");
     }
 
-    T get(int i) const
+    T& get(int i) const
     {
         bool b;
         return get(i,b);

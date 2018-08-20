@@ -12,6 +12,8 @@
 #include "Other/Proxy.h"
 #include "Tree/GTreeNode.h"
 #include "Tree/GTree.h"
+#include "Tree/BTree.h"
+#include "Tree/BTreeNode.h"
 
 using namespace std;
 using namespace ZYLib;
@@ -164,22 +166,5 @@ void josephus(int num,int start,int count)
     }
 }
 
-class Parent:public Object
-{
-public:
-    Parent()
-    {
-        cout<<"Parent()"<<endl;
-    }
-};
-
-class Child:public Parent
-{
-public:
-    Child()//:Parent()
-    {
-        cout<<"Child()"<<endl;
-    }
-};
 
 #endif // TEST_H

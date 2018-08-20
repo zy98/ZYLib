@@ -61,12 +61,12 @@ public:
         return LinkList<T>::set(mod(i),t);
     }
 
-    T get(int i, bool &b) const
+    T& get(int i, bool &b) const
     {
         return LinkList<T>::get(mod(i),b);
     }
 
-    T get(int i) const
+    T& get(int i) const
     {
         return LinkList<T>::get(mod(i));
     }

@@ -30,7 +30,7 @@ public:
             ThrowException(InvalidOperationException,"no element in current queue");
         }
     }
-    T front() const
+    T& front() const
     {
         if(list.length() > 0)
             return list.get(0);

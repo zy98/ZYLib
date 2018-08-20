@@ -44,6 +44,14 @@ public:
         return ret;
     }
 
+    virtual T& get(int i)
+    {
+        if(i>=0 && i<length())
+            return m_array[i];
+        else
+            ThrowException(IndexOutOfBoundsException,"bool get(int i),out of bound");
+    }
+
     //重载数组操作符
     T& operator[] (int i)
     {

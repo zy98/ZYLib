@@ -9,19 +9,36 @@ namespace ZYLib
 template <typename T>
 class AbsTreeNode:public Object
 {
+protected:
+    bool m_flag;
+
+    AbsTreeNode(const AbsTreeNode<T>&);
+    AbsTreeNode<T>& operator = (const AbsTreeNode<T>&);
+
+    void* operator new(unsigned int size)
+    {
+        return Object::operator new(size);
+    }
+
 public:
-    T m_value;
-    AbsTreeNode<T>* m_parent;
+    T value;
+    AbsTreeNode<T>* parent;
 
     AbsTreeNode()
     {
-        m_parent=NULL;
+        parent=NULL;
+        m_flag=false;
     }
 
     AbsTreeNode(T& value,AbsTreeNode<T>* parent=NULL)
     {
-        m_value=value;
-        m_parent=parent;
+        value=value;
+        parent=parent;
+    }
+
+    bool flag() const
+    {
+        return m_flag;
     }
 
     virtual ~AbsTreeNode()=0;
